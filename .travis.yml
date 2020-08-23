@@ -3,8 +3,13 @@ language: go
 go: 
   - 1.14.x
 
+os:
+  - linux
+  - osx
+
 install:
   - pip install pytest
 
 script:
+  - go build
   - pytest test
