@@ -1,4 +1,4 @@
-name: Go
+name: build-test
 
 on:
   push:
@@ -23,8 +23,23 @@ jobs:
       with:
         python-version: '3.x'
 
-    - name: Build
-      run: go build -v ./...
+    - name: Build Linux AMD64
+      run: go build -v -o dwarf2json-linux-amd64
+      env:
+        GOOS: linux
+        GOARCH: amd64
+
+    - name: Build Windows AMD64
+      run: go build -v -o dwarf2json-windows-amd64.exe
+      env:
+        GOOS: windows
+        GOARCH: amd64
+
+    - name: Build Darwin AMD64
+      run: go build -v -o dwarf2json-darwin-amd64
+      env:
+        GOOS: darwin
+        GOARCH: amd64
 
     - name: Install py.test
       run: |
@@ -40,4 +55,6 @@ jobs:
       with:
         name: dwarf2json
         path: |
-          dwarf2json
+          dwarf2json-linux-amd64
+          dwarf2json-windows-amd64.exe
+          dwarf2json-darwin-amd64
